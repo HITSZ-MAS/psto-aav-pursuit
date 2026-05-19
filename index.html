@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PSTO Project Page</title>
+  <meta name="description" content="Project page for decentralized end-to-end multi-AAV pursuit using Predictive Spatio-Temporal Observation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="#top">PSTO</a>
+      <nav class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#real-world">Real World</a>
+        <a href="#resources">Resources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">ICRA Project Page Draft</div>
+          <h1>Decentralized End-to-End Multi-AAV Pursuit Using Predictive Spatio-Temporal Observation</h1>
+          <p class="hero-copy">
+            A decentralized end-to-end MARL framework that maps raw LiDAR observations directly to continuous control commands for cooperative aerial pursuit in cluttered environments.
+          </p>
+          <div class="hero-tags">
+            <span>Raw LiDAR to Control</span>
+            <span>Decentralized Policy</span>
+            <span>PSTO Representation</span>
+            <span>Outdoor Validation</span>
+          </div>
+          <div class="button-row">
+            <a class="button primary" href="#resources">Paper</a>
+            <a class="button secondary" href="#resources">Code</a>
+            <a class="button secondary" href="#resources">Video</a>
+          </div>
+          <p class="hero-note">
+            Update the links in the resources section before publishing on GitHub Pages.
+          </p>
+        </div>
+        <div class="media-card">
+          <img src="assets/main.png" alt="Outdoor pursuit validation figure">
+          <p class="media-caption">Upload your original hero figure as <code>assets/main.png</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="metrics-section">
+      <div class="container metrics-grid">
+        <article class="metric-card">
+          <span class="metric-value">94%+</span>
+          <span class="metric-label">Success rate across tested 2-vs-1 pursuit conditions</span>
+        </article>
+        <article class="metric-card">
+          <span class="metric-value">89%+</span>
+          <span class="metric-label">Success rate across team sizes at 2.0 m/s</span>
+        </article>
+        <article class="metric-card">
+          <span class="metric-value">3.87 ms</span>
+          <span class="metric-label">Average onboard perception-to-control latency</span>
+        </article>
+        <article class="metric-card">
+          <span class="metric-value">2-vs-1 to 4-vs-1</span>
+          <span class="metric-label">One unified policy without parameter fine-tuning</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Overview</span>
+          <h2>Why this problem matters</h2>
+          <p>
+            Decentralized cooperative pursuit is hard because each aerial agent must act from partial, noisy, egocentric observations while still avoiding obstacles, intercepting a dynamic target, and coordinating with teammates in real time.
+          </p>
+        </div>
+        <div class="cards three-up">
+          <article class="info-card">
+            <h3>Perception uncertainty</h3>
+            <p>
+              Existing pursuit pipelines often assume clean geometric states or privileged obstacle maps, which side-steps the uncertainty of real onboard sensing.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>End-to-end control</h3>
+            <p>
+              Our framework maps raw LiDAR directly to continuous actions, avoiding hand-crafted abstractions and enabling perception-to-control learning in cluttered environments.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Swarm scalability</h3>
+            <p>
+              A single decentralized policy scales across different team sizes, allowing 2-vs-1, 3-vs-1, and 4-vs-1 pursuit without retraining.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="method" class="section alt-section">
+      <div class="container two-column">
+        <div>
+          <div class="section-heading left-align">
+            <span class="eyebrow">Method</span>
+            <h2>PSTO unifies geometry, intent, and coordination</h2>
+            <p>
+              The Predictive Spatio-Temporal Observation aligns dense obstacle geometry with predicted evader motion and teammate dynamics in a shared egocentric grid, enabling a policy to reason about pursuit and collision avoidance together.
+            </p>
+          </div>
+          <div class="cards stacked">
+            <article class="info-card">
+              <h3>PSTO representation</h3>
+              <p>
+                One channel encodes obstacle proximity from raw LiDAR, while the other fuses evader attraction and teammate repulsion into a predictive intent heatmap.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Decentralized execution</h3>
+              <p>
+                Each pursuer constructs PSTO from onboard sensing and shared teammate kinematics, then outputs continuous control commands using only local observations.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>CTDE training</h3>
+              <p>
+                The actor runs with local observations, while a centralized critic uses global state during MAPPO training to improve coordination and sample efficiency.
+              </p>
+            </article>
+          </div>
+        </div>
+        <div class="media-stack">
+          <div class="media-card">
+            <img src="assets/fig2.png" alt="System overview figure">
+            <p class="media-caption">Upload your original system overview figure as <code>assets/fig2.png</code>.</p>
+          </div>
+          <div class="media-card">
+            <img src="assets/figheat.png" alt="PSTO figure">
+            <p class="media-caption">Upload your original PSTO figure as <code>assets/figheat.png</code>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Contributions</span>
+          <h2>What the project contributes</h2>
+        </div>
+        <div class="cards three-up">
+          <article class="info-card">
+            <h3>Unified observation design</h3>
+            <p>
+              PSTO bridges sparse predictive intent and dense environmental geometry by projecting both onto the same fixed-resolution spherical grid.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Policy reuse across team sizes</h3>
+            <p>
+              The input-invariant structure of PSTO enables one policy to coordinate different team compositions without parameter changes.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Infrastructure-free deployment</h3>
+            <p>
+              The final system is validated on custom quadrotors using only onboard LiDAR sensing and onboard computing.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="section alt-section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Results</span>
+          <h2>Strong performance in simulation and scalable coordination</h2>
+          <p>
+            The method maintains high success rates in cluttered pursuit, improves capture efficiency over strong learning-based baselines, and preserves performance as the team grows from 2 pursuers to 4 pursuers.
+          </p>
+        </div>
+        <div class="results-grid">
+          <div class="media-card tall">
+            <img src="assets/trj.png" alt="Trajectory comparison figure">
+            <p class="media-caption">Upload your original trajectory figure as <code>assets/trj.png</code>.</p>
+          </div>
+          <div class="result-panel">
+            <h3>Key takeaways</h3>
+            <ul class="feature-list">
+              <li>More than 94% success rate across tested 2-vs-1 pursuit conditions without retuning.</li>
+              <li>PSTO reduces conservative detours by spatially aligning geometry with navigational intent.</li>
+              <li>Compared with disjoint representations, the method improves agility and capture efficiency in clutter.</li>
+              <li>At 2.0 m/s, the same final policy preserves strong performance across 2-vs-1, 3-vs-1, and 4-vs-1 settings.</li>
+            </ul>
+            <h3>Scalability snapshot</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Obs.</th>
+                    <th>Team</th>
+                    <th>SR</th>
+                    <th>CT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0</td>
+                    <td>2-vs-1</td>
+                    <td>100.00%</td>
+                    <td>129.50</td>
+                  </tr>
+                  <tr>
+                    <td>0</td>
+                    <td>3-vs-1</td>
+                    <td>100.00%</td>
+                    <td>110.20</td>
+                  </tr>
+                  <tr>
+                    <td>0</td>
+                    <td>4-vs-1</td>
+                    <td>100.00%</td>
+                    <td>107.90</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>2-vs-1</td>
+                    <td>95.00%</td>
+                    <td>127.22</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>3-vs-1</td>
+                    <td>93.30%</td>
+                    <td>108.94</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>4-vs-1</td>
+                    <td>91.49%</td>
+                    <td>101.17</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>2-vs-1</td>
+                    <td>91.67%</td>
+                    <td>125.24</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>3-vs-1</td>
+                    <td>91.52%</td>
+                    <td>108.92</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>4-vs-1</td>
+                    <td>89.84%</td>
+                    <td>102.97</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="panel-note">SR: success rate. CT: capture time in control steps.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="real-world" class="section">
+      <div class="container two-column reverse">
+        <div class="media-card">
+          <img src="assets/exp.png" alt="Real-world experiment figure">
+          <p class="media-caption">Upload your original real-world experiment figure as <code>assets/exp.png</code>.</p>
+        </div>
+        <div>
+          <div class="section-heading left-align">
+            <span class="eyebrow">Real-World Validation</span>
+            <h2>Outdoor deployment with onboard sensing and computing</h2>
+            <p>
+              The policy is deployed on custom-built quadrotors in an unstructured outdoor environment and runs fully onboard with LiDAR sensing, onboard state estimation, and decentralized execution.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li>Custom quadrotor platform with Livox Mid-360 and Intel NUC 13.</li>
+            <li>Average onboard latency of about 3.87 ms for encoding plus inference.</li>
+            <li>Virtual boundary points are added directly into LiDAR observations to match the training arena.</li>
+            <li>Zero-shot transfer demonstrates coordinated pincer-style pursuit and collision-free encirclement outdoors.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" class="section alt-section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Resources</span>
+          <h2>Links and publication assets</h2>
+          <p>
+            Replace the placeholder links below with your actual PDF, code repository, video, and BibTeX before making the page public.
+          </p>
+        </div>
+        <div class="cards three-up">
+          <article class="info-card resource-card">
+            <h3>Paper</h3>
+            <p>Point this button to your camera-ready or arXiv PDF.</p>
+            <a class="button primary full-width" href="#">Add paper link</a>
+          </article>
+          <article class="info-card resource-card">
+            <h3>Code</h3>
+            <p>Link to the GitHub repository or keep a release note if the code is not public yet.</p>
+            <a class="button primary full-width" href="#">Add code link</a>
+          </article>
+          <article class="info-card resource-card">
+            <h3>Video</h3>
+            <p>Point to YouTube, Bilibili, or a hosted MP4 demo.</p>
+            <a class="button primary full-width" href="#">Add video link</a>
+          </article>
+        </div>
+        <div class="bibtex-card">
+          <h3>BibTeX</h3>
+          <pre>@inproceedings{psto2026,
+  title     = {Decentralized End-to-End Multi-AAV Pursuit Using Predictive Spatio-Temporal Observation},
+  author    = {Update Your Author List Here},
+  booktitle = {Proceedings of the IEEE International Conference on Robotics and Automation},
+  year      = {2026}
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <p>Project page draft generated from the current paper manuscript.</p>
+      <p>Edit <code>index.html</code> and <code>styles.css</code> to customize text, links, and images.</p>
+    </div>
+  </footer>
+</body>
+</html>
