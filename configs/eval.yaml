@@ -1,0 +1,150 @@
+hydra:
+  searchpath:
+    - file://configs
+
+headless: true
+sim: ${task.sim}
+total_frames: 1
+max_iters: -1
+seed: 4348
+frame_skip: 10
+
+viewer:
+  resolution: [960, 720]
+  eye: [8, 0.0, 6.0]
+  lookat: [0.0, 0.0, 2.0]
+
+wandb:
+  group: ${oc.select:..task.name}
+  run_name: eval-${oc.select:..task.name,psto}-${oc.select:..algo.name,mappo}
+  job_type: eval
+  project: omnidrones
+  mode: offline
+  run_id:
+  monitor_gym: true
+  tags:
+
+
+defaults:
+  - task: Forest
+  - _self_
+
+drone:
+  model_name: hummingbird
+  uav_params:
+    name: hummingbird
+    inertia:
+      xx: 0.007
+      xy: 0.0
+      xz: 0.0
+      yy: 0.007
+      yz: 0.0
+      zz: 0.012
+    mass: 0.716
+    l: 0.34
+    drag_coef: 0.2
+    rotor_configuration:
+      arm_lengths: [0.17, 0.17, 0.17, 0.17]
+      directions: [-1.0, 1.0, -1.0, 1.0]
+      force_constants: [8.54858e-06, 8.54858e-06, 8.54858e-06, 8.54858e-06]
+      max_rotation_velocities: [838, 838, 838, 838]
+      moment_constants: [1.3677728816219314e-07, 1.3677728816219314e-07, 1.3677728816219314e-07, 1.3677728816219314e-07]
+      num_rotors: 4
+      rotor_angles: [0, 1.57079632679, 3.14159265359, -1.57079632679]
+
+sensor:
+  lidar_range: 10.0
+  lidar_vfov: [-10.0, 20.0]
+  lidar_vbeams: 24
+  lidar_hres: 0.75
+
+env:
+  num_envs: 150
+  max_episode_length: 280
+  env_spacing: 20.0
+  num_obstacles: 18
+
+feature_extractor:
+  dyn_obs_num: 0
+use_amp: false
+
+reward:
+  escape_min_distance: 7.5
+  escape_max_distance: 10.0
+  capture_threshold: 1.0
+  capture_bonus: 1800.0
+  pursuer_collision_distance: 0.35
+  evader_collision_distance: 0.32
+  pursuer_collision_penalty: -900.0
+  evader_collision_bonus: 100.0
+  escape_penalty: -700.0
+  below_bound_altitude: 0.5
+  approach_reward_min: -3.0
+  coordination_optimal_distance: 4.0
+  coordination_sigma: 2.0
+  obstacle_penalty_sensitive_range: 2.5
+  obstacle_penalty_log_power: 5.0
+  obstacle_penalty_log_offset: 1.6
+  obstacle_penalty_quantile: 0.03
+  time_penalty_start_step: 200
+  time_penalty_value: -0.05
+  pursuit_weight: 1.1
+  pursuit_offset: 0.1
+  coordination_weight: 0.2
+  obstacle_weight: 0.5
+  formation_weight: 1.3
+
+evader:
+  pursuer_force_multiplier: 18.0
+  max_speed: 1.7
+  near_boundary_threshold: 2.2
+  obstacle_awareness_distance: 2.0
+  obstacle_repulsion_weight: 0.1
+  inward_bias_strength: 0.1
+  target_altitude: 2.0
+  altitude_gain: 2.0
+
+controller:
+  yaw_speed_threshold: 0.1
+
+visibility:
+  max_distance: 15.0
+  ray_alignment_threshold: 0.7
+  obstacle_clearance: 0.5
+
+algo:
+  name: mappo
+  train_every: 45
+  training_epoch_num: 4
+  num_minibatches: 12
+  entropy_loss_coefficient: 0.02
+  actor_lr: 6e-5
+  critic_lr: 6e-5
+  encoder_lr: 6e-5
+  sl_lr: 8e-5
+  lstm_train_every: 3
+  lstm_max_grad_norm: 1.0
+  lstm_lr_decay_steps: 1000
+  lstm_lr_decay_rate: 0.95
+  action_limit: [0.8, 2.0]
+  clip_ratio: 0.1
+  value_clip_range: 0.1
+  max_grad_norm: 1.0
+  max_adv_norm: 10.0
+  eps: 1e-7
+  init_log_std: -1.0
+  lidar_vbeams: ${sensor.lidar_vbeams}
+  lidar_hres: ${sensor.lidar_hres}
+  downrate: 4
+  num_pursuers: 2
+  num_evaders: 1
+  sl_future_len: 10
+
+map_range: [9.0, 9.0, 4.5]
+
+eval:
+  checkpoint_path: null
+  steps: null
+  episodes: 150
+  record: false
+  record_duration: 30

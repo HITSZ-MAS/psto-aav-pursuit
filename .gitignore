@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.log
+*.pt
+*.pth
+*.onnx
+outputs/
+wandb/
+.multirun/
+logs/
+.vscode/
+.idea/
+.DS_Store
